@@ -19,6 +19,7 @@ interface GetProps {
   author: string;
   coverImage: string;
   source: string;
+  status: string;
   created: Date | string;
 }
 
@@ -55,6 +56,7 @@ export function NoticiasCadastradas() {
               author: doc.data().formData.author,
               coverImage: doc.data().formData.coverImage,
               source: doc.data().formData.source,
+              status: doc.data().status,
             });
           });
           setGetDocuments(lista);
@@ -124,6 +126,11 @@ export function NoticiasCadastradas() {
               <strong>Data: </strong>
               {item.created.toString()}
             </p>
+            <p className="flex-1 text-white border-b">
+              <strong>Status: </strong>
+              {item.status}
+            </p>
+
             <button
               className="bg-blue-600 py-1 px-1 rounded-sm text-white"
               onClick={() => handleDelete(item.id)}

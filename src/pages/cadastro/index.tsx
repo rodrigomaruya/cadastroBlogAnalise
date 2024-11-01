@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 export function Cadastro() {
   const [selectInput, setSelectInput] = useState("");
+  const [selectStatus, setSelectStatus] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     summary: "",
@@ -28,12 +29,13 @@ export function Cadastro() {
 
   async function handleRegister(e: FormEvent) {
     e.preventDefault();
-    if (selectInput === "") {
-      return alert("Escolha uma categoria");
+    if (selectInput === "" || selectStatus === "") {
+      return alert("Escolha uma categoria e um Status");
     }
     addDoc(collection(db, selectInput), {
       formData,
       created: new Date(),
+      status: selectStatus,
     })
       .then(() => {
         setFormData({
@@ -132,7 +134,19 @@ export function Cadastro() {
           value={formData.source}
           onChange={handleChange}
         />
-
+        <div className="flex flex-col w-full mb-2">
+          <label>Status</label>
+          <select
+            onChange={(e) => setSelectStatus(e.target.value)}
+            className="py-1 rounded-sm"
+          >
+            <option value="" selected>
+              Status
+            </option>
+            <option value="rascunho">Rascunho</option>
+            <option value="postar">Postar</option>
+          </select>
+        </div>
         <button
           type="submit"
           className="bg-blue-500 py-2 rounded-sm text-white font-semibold mt-2"
